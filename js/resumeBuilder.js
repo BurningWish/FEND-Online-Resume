@@ -93,7 +93,7 @@ var education = {
         }
     ],
 
-    display: function() {
+    displaySchool: function() {
         // Display Schools Education using forEach loop
         education.schools.forEach(function(school) {
             $("#education").append(HTMLschoolStart);
@@ -125,7 +125,9 @@ var education = {
                 $(".education-entry:last").append("<hr class=section-divider>");
             }
         });
+    },
 
+    displayCourse: function(){
         // Add the heading of online classes only once
         $("#education").append(HTMLonlineClasses);
 
@@ -151,6 +153,11 @@ var education = {
             }
         });
     }
+};
+
+education.display = function(){
+    education.displaySchool();
+    education.displayCourse();
 };
 
 var work = {
