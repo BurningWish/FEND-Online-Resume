@@ -16,8 +16,7 @@ var bio = {
         // Display Bio information at the Header
         var formattedName = HTMLheaderName.replace("%data%", bio.name);
         var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
-        $("#header").prepend(formattedRole);
-        $("#header").prepend(formattedName);
+        $("#header").prepend(formattedName, formattedRole);
 
         var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
         var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
@@ -27,14 +26,9 @@ var bio = {
         var formattedBioPic = HTMLbioPic.replace("%data%", bio.biopic);
         var formattedWelcomMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
 
-        $("#topContacts").append(formattedMobile);
-        $("#topContacts").append(formattedEmail);
-        $("#topContacts").append(formattedGithub);
-        $("#topContacts").append(formattedTwitter);
-        $("#topContacts").append(formattedLocation);
+        $("#topContacts").append(formattedMobile, formattedEmail, formattedGithub, formattedTwitter, formattedLocation);
 
-        $("#header").append(formattedBioPic);
-        $("#header").append(formattedWelcomMsg);
+        $("#header").append(formattedBioPic, formattedWelcomMsg);
 
         $("#header").append(HTMLskillsStart);
         bio.skills.forEach(function(skill) {
@@ -43,11 +37,7 @@ var bio = {
         });
 
         // Display Bio information at the Footer
-        $("#footerContacts").append(formattedMobile);
-        $("#footerContacts").append(formattedEmail);
-        $("#footerContacts").append(formattedGithub);
-        $("#footerContacts").append(formattedTwitter);
-        $("#footerContacts").append(formattedLocation);
+        $("#footerContacts").append(formattedMobile, formattedEmail, formattedGithub, formattedTwitter, formattedLocation);
     }
 };
 
@@ -98,16 +88,13 @@ var education = {
         education.schools.forEach(function(school) {
             $("#education").append(HTMLschoolStart);
 
-            var formattedName = HTMLschoolName.replace("%data%", school.name);
+            var formattedName = HTMLschoolName.replace("%data%", school.name).replace("#", school.url);
             var formattedDegree = HTMLschoolDegree.replace("%data%", school.degree);
             var formattedExperience = formattedName + formattedDegree;
-            $(".education-entry:last").append(formattedExperience);
-
             var formattedDates = HTMLschoolDates.replace("%data%", school.dates);
-            $(".education-entry:last").append(formattedDates);
-
             var formattedLocation = HTMLschoolLocation.replace("%data%", school.location);
-            $(".education-entry:last").append(formattedLocation);
+
+            $(".education-entry:last").append(formattedExperience, formattedDates, formattedLocation);
 
             var majorString = "";
             // Loop through the major array, concatenate all the majors into a large string
@@ -116,9 +103,6 @@ var education = {
             });
             var formattedMajor = HTMLschoolMajor.replace("%data%", majorString);
             $(".education-entry:last").append(formattedMajor);
-
-            // Modify the href for the <a> tag
-            $(".education-entry a:last").attr("href", school.url);
 
             // If this education entry doesn't correspond to the last school, append an <hr> tag at the end of it
             if (school != education.schools[education.schools.length - 1]) {
@@ -135,17 +119,13 @@ var education = {
         education.onlineCourses.forEach(function(course) {
             $("#education").append(HTMLschoolStart);
 
-            var formattedTitle = HTMLonlineTitle.replace("%data%", course.title);
+            var formattedTitle = HTMLonlineTitle.replace("%data%", course.title).replace("#", course.url);
             var formattedSchool = HTMLonlineSchool.replace("%data%", course.school);
             var formattedCourse = formattedTitle + formattedSchool;
-            $(".education-entry:last").append(formattedCourse);
-
             var formattedDates = HTMLonlineDates.replace("%data%", course.dates);
-            $(".education-entry:last").append(formattedDates);
+            var formattedUrl = HTMLonlineURL.replace("%data%", course.url).replace("#", course.url);
 
-            var formattedUrl = HTMLonlineURL.replace("%data%", course.url);
-            $(".education-entry:last").append(formattedUrl);
-            $(".education-entry a:last").attr("href", course.url);
+            $(".education-entry:last").append(formattedCourse, formattedDates, formattedUrl);
 
             // If this online course entry doesn't correspond to the last course, append an <hr> tag at the end of it
             if (course != education.onlineCourses[education.onlineCourses.length - 1]) {
@@ -184,18 +164,15 @@ var work = {
         work.jobs.forEach(function(job) {
             $("#workExperience").append(HTMLworkStart);
 
-            var formattedEmployer = HTMLworkEmployer.replace("%data%", job.employer);
+            var formattedEmployer = HTMLworkEmployer.replace("%data%", job.employer).replace("#", job.url);
             var formattedTitle = HTMLworkTitle.replace("%data%", job.title);
             var formattedEmployerTitle = formattedEmployer + formattedTitle;
-            $(".work-entry:last").append(formattedEmployerTitle);
-
             var formattedDates = HTMLworkDates.replace("%data%", job.dates);
-            $(".work-entry:last").append(formattedDates);
-
+            var formattedLocation = HTMLworkLocation.replace("%data%", job.location);
             var formattedDescription = HTMLworkDescription.replace("%data%", job.description);
-            $(".work-entry:last").append(formattedDescription);
 
-            $(".work-entry a:last").attr("href", job.url);
+            $(".work-entry:last").append(formattedEmployerTitle, formattedDates, formattedLocation, formattedDescription);
+
 
             // If this work entry doesn't correspond to the last job, append an <hr> tag at the end of it
             if (job != work.jobs[work.jobs.length - 1]) {
@@ -235,14 +212,11 @@ var projects = {
         projects.projects.forEach(function(project) {
             $("#projects").append(HTMLprojectStart);
 
-            var formattedTitle = HTMLprojectTitle.replace("%data%", project.title);
-            $(".project-entry:last").append(formattedTitle);
-
+            var formattedTitle = HTMLprojectTitle.replace("%data%", project.title).replace("#", project.url);
             var formattedDates = HTMLprojectDates.replace("%data%", project.dates);
-            $(".project-entry:last").append(formattedDates);
-
             var formattedDescription = HTMLprojectDescription.replace("%data%", project.description);
-            $(".project-entry:last").append(formattedDescription);
+
+            $(".project-entry:last").append(formattedTitle, formattedDates, formattedDescription);
 
             // Each project has multiple pictures, there is another forEach loop
             project.images.forEach(function(image) {
